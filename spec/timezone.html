@@ -142,7 +142,8 @@
         1. Let _timeZone_ be the *this* value.
         1. Perform ? RequireInternalSlot(_timeZone_, [[InitializedTemporalTimeZone]]).
         1. Perform ? RequireInternalSlot(_absolute_, [[InitializedTemporalAbsolute]]).
-        1. Return ? GetDateTimeFor(_timeZone_, _absolute_);
+        1. Let _result_ be the moment _absolute_.[[Nanosecond]] nanoseconds from the epoch, in the time zone _timeZone_.[[Identifier]].
+        1. Return ? CreateDateTime(_result_.[[Year]], _result_.[[Month]], _result_.[[Day]], _result_.[[Hour]], _result_.[[Minute]], _result_.[[Second]], _result_.[[Millisecond]], _result_.[[Microsecond]], _result_.[[Nanosecond]]).
       </emu-alg>
     </emu-clause>
 
@@ -255,8 +256,12 @@
         1. Assert: _timeZone_ has an [[InitializedTemporalTimeZone]] internal slot.
         1. Assert: Type(_absolute_) is Object.
         1. Assert: _absolute_ has an [[InitializedTemporalAbsolute]] internal slot.
-        1. Let _result_ be the moment _absolute_.[[Nanosecond]] nanoseconds from the epoch, in the time zone _timeZone_.[[Identifier]].
-        1. Return ? CreateDateTime(_result_.[[Year]], _result_.[[Month]], _result_.[[Day]], _result_.[[Hour]], _result_.[[Minute]], _result_.[[Second]], _result_.[[Millisecond]], _result_.[[Microsecond]], _result_.[[Nanosecond]]).
+        1. Let _method_ be ? GetMethod(_timeZone_, *"getDateTimeFor"*).
+        1. If _method_ is *undefined*, then
+          1. Set _method_ to %Temporal.TimeZone.prototype.getDateTimeFor%.
+        1. Let _dateTime_ be ? Call(_method_, _timeZone_, « _absolute_ »).
+        1. Perform ? RequireInternalSlot(_dateTime_, [[InitializedTemporalDateTime]]).
+        1. Return _dateTime_.
       </emu-alg>
     </emu-clause>
   </emu-clause>
