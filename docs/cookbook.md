@@ -158,6 +158,14 @@ Map localized departure time and duration into localized arrival time.
 {{cookbook/getLocalizedArrival.mjs}}
 ```
 
+### Push back a launch date
+
+Add the number of days it took to get an approval, and advance to the start of the following month.
+
+```javascript
+{{cookbook/plusAndRoundToMonthStart.mjs}}
+```
+
 ### Schedule a reminder ahead of matching a record-setting duration
 
 Map a `Temporal.Absolute` instance, a previous-record `Temporal.Duration`, and an advance-notice `Temporal.Duration` into a `Temporal.Absolute` instance corresponding with an absolute instant ahead of the instant at which the previous record will be matched by the specified window.
