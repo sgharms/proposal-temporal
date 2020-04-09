@@ -1,4 +1,5 @@
 import './absoluteFromLegacyDate.mjs';
+import './countPrecedingWeeklyDaysInMonth.mjs';
 import './dateTimeFromLegacyDate.mjs';
 import './getBusinessOpenStateText.mjs';
 import './getCurrentDate.mjs';
@@ -16,6 +17,7 @@ import './getTripDurationInHrMinSec.mjs';
 import './getUtcOffsetDifferenceSecondsAtInstant.mjs';
 import './getUtcOffsetSecondsAtInstant.mjs';
 import './getUtcOffsetStringAtInstant.mjs';
+import './getWeeklyDaysInMonth.mjs';
 import './legacyDateFromDateTime.mjs';
 import './nextWeeklyOccurrence.mjs';
 import './plusAndRoundToMonthStart.mjs';
