@@ -20,6 +20,7 @@ import './getUtcOffsetSecondsAtInstant.mjs';
 import './getUtcOffsetStringAtInstant.mjs';
 import './getWeeklyDaysInMonth.mjs';
 import './legacyDateFromDateTime.mjs';
+import './localTimeForFutureEvents.mjs';
 import './nextWeeklyOccurrence.mjs';
 import './plusAndRoundToMonthStart.mjs';
 import './sortAbsoluteInstants.mjs';
