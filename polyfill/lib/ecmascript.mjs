@@ -19,7 +19,7 @@ import {
   GetSlot,
   HasSlot,
   EPOCHNANOSECONDS,
-  IDENTIFIER,
+  TIMEZONE_ID,
   YEAR,
   MONTH,
   DAY,
@@ -61,7 +61,7 @@ import * as PARSE from './regex.mjs';
 
 export const ES = ObjectAssign({}, ES2019, {
   IsTemporalAbsolute: (item) => HasSlot(item, EPOCHNANOSECONDS),
-  IsTemporalTimeZone: (item) => HasSlot(item, IDENTIFIER),
+  IsTemporalTimeZone: (item) => HasSlot(item, TIMEZONE_ID),
   IsTemporalDuration: (item) =>
     HasSlot(item, YEARS, MONTHS, DAYS, HOURS, MINUTES, SECONDS, MILLISECONDS, MICROSECONDS, NANOSECONDS),
   IsTemporalDate: (item) =>
