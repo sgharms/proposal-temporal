@@ -105,9 +105,10 @@ export class Calendar {
     return GetSlot(this, CALENDAR_ID);
   }
   static from(item) {
-    const result = ES.ToTemporalCalendar(item);
-    if (this === Calendar) return result;
-    return new this(GetSlot(result, CALENDAR_ID));
+    return ES.ToTemporalCalendar(item);
+  }
+  static fromId(id) {
+    return ES.GetBuiltinCalendar(id);
   }
 }
 

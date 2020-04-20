@@ -61,6 +61,9 @@ const INTRINSICS = {
   '%Temporal.Duration%': TemporalDuration,
   '%Temporal.Calendar%': TemporalCalendar
 };
+const BUILTIN_CALENDARS = {
+};
+const BUILTIN_CALENDAR_INSTANCES = {};
 
 import * as PARSE from './regex.mjs';
 
@@ -95,10 +98,18 @@ export const ES = ObjectAssign({}, ES2019, {
     }
     return result;
   },
+  GetBuiltinCalendar: (id) => {
+    if (!(id in BUILTIN_CALENDARS)) throw new RangeError(`unknown calendar ${id}`);
+    if (!(id in BUILTIN_CALENDAR_INSTANCES)) {
+      BUILTIN_CALENDAR_INSTANCES[id] = new BUILTIN_CALENDARS[id]();
+    }
+    return BUILTIN_CALENDAR_INSTANCES[id];
+  },
+  GetDefaultCalendar: () => ES.GetBuiltinCalendar('iso8601'),
   ToTemporalCalendar: (item) => {
     if (ES.IsTemporalCalendar(item)) return item;
     const stringIdent = ES.ToString(item);
-    return new TemporalCalendar(stringIdent);
+    return ES.GetBuiltinCalendar(stringIdent);
   },
   ParseISODateTime: (isoString, { zoneRequired }) => {
     const regex = zoneRequired ? PARSE.absolute : PARSE.datetime;
