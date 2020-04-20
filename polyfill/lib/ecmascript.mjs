@@ -12,6 +12,7 @@ import { Time as TemporalTime } from './time.mjs';
 import { Absolute as TemporalAbsolute } from './absolute.mjs';
 import { TimeZone as TemporalTimeZone } from './timezone.mjs';
 import { Duration as TemporalDuration } from './duration.mjs';
+import { Calendar as TemporalCalendar } from './calendar.mjs';
 
 import bigInt from 'big-integer';
 
@@ -20,6 +21,7 @@ import {
   HasSlot,
   EPOCHNANOSECONDS,
   TIMEZONE_ID,
+  CALENDAR_ID,
   ISO_YEAR,
   ISO_MONTH,
   ISO_DAY,
@@ -56,7 +58,8 @@ const INTRINSICS = {
   '%Temporal.Time%': TemporalTime,
   '%Temporal.TimeZone%': TemporalTimeZone,
   '%Temporal.Absolute%': TemporalAbsolute,
-  '%Temporal.Duration%': TemporalDuration
+  '%Temporal.Duration%': TemporalDuration,
+  '%Temporal.Calendar%': TemporalCalendar
 };
 
 import * as PARSE from './regex.mjs';
@@ -64,6 +67,7 @@ import * as PARSE from './regex.mjs';
 export const ES = ObjectAssign({}, ES2019, {
   IsTemporalAbsolute: (item) => HasSlot(item, EPOCHNANOSECONDS),
   IsTemporalTimeZone: (item) => HasSlot(item, TIMEZONE_ID),
+  IsTemporalCalendar: (item) => HasSlot(item, CALENDAR_ID),
   IsTemporalDuration: (item) =>
     HasSlot(item, YEARS, MONTHS, DAYS, HOURS, MINUTES, SECONDS, MILLISECONDS, MICROSECONDS, NANOSECONDS),
   IsTemporalDate: (item) =>
@@ -90,6 +94,11 @@ export const ES = ObjectAssign({}, ES2019, {
       }
     }
     return result;
+  },
+  ToTemporalCalendar: (item) => {
+    if (ES.IsTemporalCalendar(item)) return item;
+    const stringIdent = ES.ToString(item);
+    return new TemporalCalendar(stringIdent);
   },
   ParseISODateTime: (isoString, { zoneRequired }) => {
     const regex = zoneRequired ? PARSE.absolute : PARSE.datetime;

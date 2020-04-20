@@ -8,5 +8,6 @@ export const YearMonth = ES.GetIntrinsic('%Temporal.YearMonth%');
 export const MonthDay = ES.GetIntrinsic('%Temporal.MonthDay%');
 export const Time = ES.GetIntrinsic('%Temporal.Time%');
 export const Duration = ES.GetIntrinsic('%Temporal.Duration%');
+export const Calendar = ES.GetIntrinsic('%Temporal.Calendar%');
 
 export { now } from './now.mjs';
