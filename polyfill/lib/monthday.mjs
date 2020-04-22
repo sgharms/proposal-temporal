@@ -76,8 +76,11 @@ export class MonthDay {
   }
   static compare(one, two) {
     if (!ES.IsTemporalMonthDay(one) || !ES.IsTemporalMonthDay(two)) throw new TypeError('invalid MonthDay object');
-    if (one.month !== two.month) return ES.ComparisonResult(one.month - two.month);
-    if (one.day !== two.day) return ES.ComparisonResult(one.day - two.day);
+    for (const slot of [MONTH, DAY]) {
+      const val1 = GetSlot(one, slot);
+      const val2 = GetSlot(two, slot);
+      if (val1 !== val2) return ES.ComparisonResult(val1 - val2);
+    }
     return ES.ComparisonResult(0);
   }
 }
