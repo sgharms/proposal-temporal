@@ -12,7 +12,7 @@ import { Time as TemporalTime } from './time.mjs';
 import { Absolute as TemporalAbsolute } from './absolute.mjs';
 import { TimeZone as TemporalTimeZone } from './timezone.mjs';
 import { Duration as TemporalDuration } from './duration.mjs';
-import { Calendar as TemporalCalendar } from './calendar.mjs';
+import { Calendar as TemporalCalendar, Iso8601 as CalendarIso8601 } from './calendar.mjs';
 
 import bigInt from 'big-integer';
 
@@ -62,6 +62,7 @@ const INTRINSICS = {
   '%Temporal.Calendar%': TemporalCalendar
 };
 const BUILTIN_CALENDARS = {
+  iso8601: CalendarIso8601
 };
 const BUILTIN_CALENDAR_INSTANCES = {};
 
