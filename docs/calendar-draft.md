@@ -65,35 +65,36 @@ class Temporal.Calendar {
 	toISO(
 		self: Temporal.Date
 	) : Temporal.Date;
+	// FIXME: -> date.withCalendar(isoCalendar) -> isoCalendar.fromISO(date)?
 
 	/** Returns the projection of isoDate in the custom calendar */
 	fromISO(
 		isoDate: Temporal.Date
 	) : Temporal.Date;
+	// FIXME: rename this "project" or something?
 
 	/** Constructs a Temporal.Date from a free-form option bag */
 	dateFromFields(
-		fields: object
+		fields: object,
+		constructor: function
 	) : Temporal.Date;
 
 	/** Constructs a Temporal.DateTime from a free-form option bag */
 	dateTimeFromFields(
-		fields: object
+		fields: object,
+		constructor: function
 	) : Temporal.DateTime;
-
-	/** Constructs a Temporal.Time from a free-form option bag */
-	timeFromFields(
-		fields: object
-	) : Temporal.Time;
 
 	/** Constructs a Temporal.YearMonth from a free-form option bag */
 	yearMonthFromFields(
-		fields: object
+		fields: object,
+		constructor: function
 	) : Temporal.YearMonth;
 
 	/** Constructs a Temporal.MonthDay from a free-form option bag */
 	monthDayFromFields(
 		fields: object
+		constructor: function
 	) : Temporal.MonthDay;
 
 	/** A string identifier for this calendar */
@@ -107,20 +108,22 @@ class Temporal.Calendar {
 	plus(
 		input: Temporal.Date,
 		duration: Temporal.Duration,
-		options: /* options bag */
+		options: /* options bag */,
+		constructor: function
 	) : Temporal.Date;
 
 	/** Returns input minus duration according to the calendar rules. */
 	minus(
 		input: Temporal.Date,
 		duration: Temporal.Duration,
-		options: /* options bag */
+		options: /* options bag */,
+		constructor: function
 	) : Temporal.Date;
 
-	/** Returns left minus right, which are dates in the same calendar. */
+	/** Returns larger minus smaller, which are dates in the same calendar. */
 	difference(
-		left: Temporal.Date,
-		right: Temporal.Date,
+		smaller: Temporal.Date,
+		larger: Temporal.Date,
 		options: /* options bag */
 	) : Temporal.Duration;
 
@@ -201,21 +204,21 @@ A partial ISO calendar would be one implemented as follows:
 
 ```javascript
 const PartialIsoCalendar = {
-	[Temporal.Calendar.toISO] = (self) => {
+	toISO(self) {
 		return self;
 	},
 
-	[Temporal.Calendar.fromISO] = (isoDate) => {
+	fromISO(isoDate) {
 		return isoDate;
 	},
 
-	[Temporal.Calendar.id] = "iso",
+	id: "iso",
 
 	// ALL OTHER METHODS:
-	[Temporal.Calendar.plus] = () => {
+	plus() {
 		throw new TypeError("Unsupported operation: full calendar required");
 	}
-	// Same for [Temporal.Calendar.minus], etc.
+	// Same for minus, etc.
 }
 ```
 
@@ -264,7 +267,7 @@ The calendar IDs are less clear.  If the partial ISO calendar used ID `"iso"`, t
 | Impact on i18n correctness | ☹️ Programmer needs to know to "opt in" to use the user's calendar preference | 😃 All operations require an explicit choice | 😃 Calendar-sensitive operations require an explicit choice | 🙂 Correct on front end, but programmer needs to know to "opt in" on back end |
 | Impact on interoperability | 😃 ISO is the industry standard format | 😃 Explicit choice | 😃 I/O operations operate in the ISO calendar space | ☹️ Temporal objects may not interop with the ISO calendar |
 
-\**See https://github.com/tc39/proposal-temporal/issues/240#issuecomment-557726669*
+<!--\**See https://github.com/tc39/proposal-temporal/issues/240#issuecomment-557726669*-->
 
 ## Temporal.Date API changes
 
