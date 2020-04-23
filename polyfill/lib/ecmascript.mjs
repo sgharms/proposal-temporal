@@ -12,7 +12,7 @@ import { Time as TemporalTime } from './time.mjs';
 import { Absolute as TemporalAbsolute } from './absolute.mjs';
 import { TimeZone as TemporalTimeZone } from './timezone.mjs';
 import { Duration as TemporalDuration } from './duration.mjs';
-import { Calendar as TemporalCalendar, Iso8601 as CalendarIso8601 } from './calendar.mjs';
+import { Calendar as TemporalCalendar, Iso8601 as CalendarIso8601, Japanese as CalendarJapanese } from './calendar.mjs';
 
 import bigInt from 'big-integer';
 
@@ -62,7 +62,8 @@ const INTRINSICS = {
   '%Temporal.Calendar%': TemporalCalendar
 };
 const BUILTIN_CALENDARS = {
-  iso8601: CalendarIso8601
+  iso8601: CalendarIso8601,
+  japanese: CalendarJapanese
 };
 const BUILTIN_CALENDAR_INSTANCES = {};
 
@@ -963,6 +964,39 @@ export const ES = ObjectAssign({}, ES2019, {
     }
 
     return { days, hours, minutes, seconds, milliseconds, microseconds, nanoseconds };
+  },
+
+  CompareDate: (one, two) => {
+    for (const slot of [ISO_YEAR, ISO_MONTH, ISO_DAY]) {
+      const val1 = GetSlot(one, slot);
+      const val2 = GetSlot(two, slot);
+      if (val1 !== val2) return ES.ComparisonResult(val1 - val2);
+    }
+    return ES.ComparisonResult(0);
+  },
+  CompareDateTime: (one, two) => {
+    for (const slot of [ISO_YEAR, ISO_MONTH, ISO_DAY, HOUR, MINUTE, SECOND, MILLISECOND, MICROSECOND, NANOSECOND]) {
+      const val1 = GetSlot(one, slot);
+      const val2 = GetSlot(two, slot);
+      if (val1 !== val2) return ES.ComparisonResult(val1 - val2);
+    }
+    return ES.ComparisonResult(0);
+  },
+  CompareMonthDay: (one, two) => {
+    for (const slot of [ISO_MONTH, ISO_DAY]) {
+      const val1 = GetSlot(one, slot);
+      const val2 = GetSlot(two, slot);
+      if (val1 !== val2) return ES.ComparisonResult(val1 - val2);
+    }
+    return ES.ComparisonResult(0);
+  },
+  CompareYearMonth: (one, two) => {
+    for (const slot of [ISO_YEAR, ISO_MONTH]) {
+      const val1 = GetSlot(one, slot);
+      const val2 = GetSlot(two, slot);
+      if (val1 !== val2) return ES.ComparisonResult(val1 - val2);
+    }
+    return ES.ComparisonResult(0);
   },
 
   ConstrainToRange: (value, min, max) => Math.min(max, Math.max(min, value)),

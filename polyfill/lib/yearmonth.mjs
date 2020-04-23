@@ -169,12 +169,7 @@ export class YearMonth {
   }
   static compare(one, two) {
     if (!ES.IsTemporalYearMonth(one) || !ES.IsTemporalYearMonth(two)) throw new TypeError('invalid YearMonth object');
-    for (const slot of [ISO_YEAR, ISO_MONTH]) {
-      const val1 = GetSlot(one, slot);
-      const val2 = GetSlot(two, slot);
-      if (val1 !== val2) return ES.ComparisonResult(val1 - val2);
-    }
-    return ES.ComparisonResult(0);
+    return ES.CompareYearMonth(one, two);
   }
 }
 YearMonth.prototype.toJSON = YearMonth.prototype.toString;

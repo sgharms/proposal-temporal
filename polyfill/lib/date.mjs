@@ -177,12 +177,7 @@ export class Date {
   }
   static compare(one, two) {
     if (!ES.IsTemporalDate(one) || !ES.IsTemporalDate(two)) throw new TypeError('invalid Date object');
-    for (const slot of [ISO_YEAR, ISO_MONTH, ISO_DAY]) {
-      const val1 = GetSlot(one, slot);
-      const val2 = GetSlot(two, slot);
-      if (val1 !== val2) return ES.ComparisonResult(val1 - val2);
-    }
-    return ES.ComparisonResult(0);
+    return ES.CompareDate(one, two);
   }
 }
 Date.prototype.toJSON = Date.prototype.toString;

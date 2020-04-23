@@ -94,12 +94,7 @@ export class MonthDay {
   }
   static compare(one, two) {
     if (!ES.IsTemporalMonthDay(one) || !ES.IsTemporalMonthDay(two)) throw new TypeError('invalid MonthDay object');
-    for (const slot of [ISO_MONTH, ISO_DAY]) {
-      const val1 = GetSlot(one, slot);
-      const val2 = GetSlot(two, slot);
-      if (val1 !== val2) return ES.ComparisonResult(val1 - val2);
-    }
-    return ES.ComparisonResult(0);
+    return ES.CompareMonthDay(one, two);
   }
 }
 MonthDay.prototype.toJSON = MonthDay.prototype.toString;

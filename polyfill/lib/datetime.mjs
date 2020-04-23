@@ -374,7 +374,7 @@ export class DateTime {
         microsecond,
         nanosecond
       } = ES.ParseTemporalDateTimeString(ES.ToString(item)));
-      calendar = ES.GetDefaultCalendar(); 
+      calendar = ES.GetDefaultCalendar();
     }
     ({ year, month, day, hour, minute, second, millisecond, microsecond, nanosecond } = ES.RegulateDateTime(
       year,
@@ -394,12 +394,7 @@ export class DateTime {
   }
   static compare(one, two) {
     if (!ES.IsTemporalDateTime(one) || !ES.IsTemporalDateTime(two)) throw new TypeError('invalid DateTime object');
-    for (const slot of [ISO_YEAR, ISO_MONTH, ISO_DAY, HOUR, MINUTE, SECOND, MILLISECOND, MICROSECOND, NANOSECOND]) {
-      const val1 = GetSlot(one, slot);
-      const val2 = GetSlot(two, slot);
-      if (val1 !== val2) return ES.ComparisonResult(val1 - val2);
-    }
-    return ES.ComparisonResult(0);
+    return ES.CompareDateTime(one, two);
   }
 }
 DateTime.prototype.toJSON = DateTime.prototype.toString;
