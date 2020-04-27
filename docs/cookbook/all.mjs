@@ -1,4 +1,5 @@
 import './absoluteFromLegacyDate.mjs';
+import './bridgePublicHolidays.mjs';
 import './calculateDailyOccurrence.mjs';
 import './countPrecedingWeeklyDaysInMonth.mjs';
 import './dateTimeFromLegacyDate.mjs';
