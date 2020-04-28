@@ -823,6 +823,7 @@ export const ES = ObjectAssign({}, ES2019, {
   },
 
   BalanceYearMonth: (year, month) => {
+    if (!Number.isFinite(year) || !Number.isFinite(month)) throw new RangeError('infinity is out of range');
     month -= 1;
     year += Math.floor(month / 12);
     month %= 12;
@@ -831,6 +832,7 @@ export const ES = ObjectAssign({}, ES2019, {
     return { year, month };
   },
   BalanceDate: (year, month, day) => {
+    if (!Number.isFinite(day)) throw new RangeError('infinity is out of range');
     ({ year, month } = ES.BalanceYearMonth(year, month));
     let daysInYear = 0;
     let testYear = month > 2 ? year : year - 1;
@@ -858,6 +860,10 @@ export const ES = ObjectAssign({}, ES2019, {
     return { year, month, day };
   },
   BalanceSubSecond: (millisecond, microsecond, nanosecond) => {
+    if (!Number.isFinite(millisecond) || !Number.isFinite(microsecond) || !Number.isFinite(nanosecond)) {
+      throw new RangeError('infinity is out of range');
+    }
+
     microsecond += Math.floor(nanosecond / 1000);
     nanosecond = ES.NonNegativeModulo(nanosecond, 1000);
 
@@ -870,6 +876,10 @@ export const ES = ObjectAssign({}, ES2019, {
     return { seconds, millisecond, microsecond, nanosecond };
   },
   BalanceTime: (hour, minute, second, millisecond, microsecond, nanosecond) => {
+    if (!Number.isFinite(hour) || !Number.isFinite(minute) || !Number.isFinite(second)) {
+      throw new RangeError('infinity is out of range');
+    }
+
     let seconds;
     ({ seconds, millisecond, microsecond, nanosecond } = ES.BalanceSubSecond(millisecond, microsecond, nanosecond));
 
